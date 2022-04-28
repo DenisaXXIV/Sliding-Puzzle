@@ -1,10 +1,9 @@
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import javax.swing.*;
 class PicPuzzle extends JFrame implements ActionListener{
     JButton b1,b2,b3,b4,b5,b6,b7,b8,b9,sample,starB;
+    int level = 1;
     Image iconBar = Toolkit.getDefaultToolkit().getImage("src/main/resources/pic/star.jpg") ;
     Icon star;
     Icon ic0=new ImageIcon("src/main/resources/pic/star.jpg");
@@ -43,7 +42,7 @@ class PicPuzzle extends JFrame implements ActionListener{
 
     PicPuzzle(){
 
-        super("pic puzzle");
+        super("Sliding Puzzle");
 
         b1=new JButton(ic1);
         b1.setBounds(10,80,100,100);
@@ -70,16 +69,13 @@ class PicPuzzle extends JFrame implements ActionListener{
         l1.setBounds(330,200,70,20);
         JLabel l2=new JLabel("NOTE: This fox has power to swap with neighbour icon:");
         l2.setBounds(5,15,500,20);
-        JLabel l3=new JLabel("click sample picture to next puzzle");
-        l3.setBounds(380,320,200,20);
-        l3.setForeground(Color.red);
 
         starB=new JButton(ic0);
         starB.setBounds(330,5,50,50);
         star=b9.getIcon();
 
         add(b1);add(b2);add(b3);add(b4);add(b5);add(b6);add(b7);add(b8);
-        add(b9);add(sample);add(l1);add(l2);add(starB);add(l3);
+        add(b9);add(sample);add(l1);add(l2);add(starB);
         b1.addActionListener(this); b2.addActionListener(this);
         b3.addActionListener(this); b4.addActionListener(this);
         b5.addActionListener(this); b6.addActionListener(this);
@@ -87,12 +83,11 @@ class PicPuzzle extends JFrame implements ActionListener{
         b9.addActionListener(this);
 
         setIconImage(iconBar);
-
-        sample.addActionListener(this);
         setLayout(null);
         setSize(600,500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -105,7 +100,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b4.setIcon(s1);
                 b1.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b2){
             Icon s1=b2.getIcon();
@@ -120,7 +115,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b3.setIcon(s1);
                 b2.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b3){
             Icon s1=b3.getIcon();
@@ -131,7 +126,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b6.setIcon(s1);
                 b3.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b4){
             Icon s1=b4.getIcon();
@@ -146,7 +141,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b7.setIcon(s1);
                 b4.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b5){
             Icon s1=b5.getIcon();
@@ -165,7 +160,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b8.setIcon(s1);
                 b5.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b6){
             Icon s1=b6.getIcon();
@@ -180,7 +175,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b9.setIcon(s1);
                 b6.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b7){
             Icon s1=b7.getIcon();
@@ -191,7 +186,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b8.setIcon(s1);
                 b7.setIcon(star);
             }
-        }//end of if
+        }
 
         if(e.getSource()==b8){
             Icon s1=b8.getIcon();
@@ -207,7 +202,7 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b8.setIcon(star);
             }
 
-        }//end of if
+        }
 
         if(e.getSource()==b9){
             Icon s1=b9.getIcon();
@@ -218,12 +213,49 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b6.setIcon(s1);
                 b9.setIcon(star);
             }
-        }//end of if
+        }
 
-        if(e.getSource()==sample){
-            Icon s1=sample.getIcon();
-            if(s1==samicon3){
+        if(isWin())
+        {
+            nextLevel();
+        }
+    }
+
+    public void openTextWindow(){
+        if(level == 1)
+        {
+            WinWindow win = new WinWindow(iconBar,level);
+        }
+        else
+        {
+            WinWindow win = new WinWindow(iconBar);
+        }
+    }
+
+    public boolean isWin()
+    {
+        if((level == 1 && b1.getIcon() == ic1 && b2.getIcon() == ic3 && b3.getIcon() == ic9 && b4.getIcon() == ic5
+                && b5.getIcon() == ic2 && b6.getIcon() == ic6 && b7.getIcon() == ic4 && b8.getIcon() == ic7
+                && b9.getIcon() == ic8) || (level == 2 && b1.getIcon() == ic14 && b2.getIcon() == ic11
+                && b3.getIcon() == ic12 && b4.getIcon() == ic15 && b5.getIcon() == ic18 && b6.getIcon() == ic13
+                && b7.getIcon() == ic17 && b8.getIcon() == ic19 && b9.getIcon() == ic16) || (level == 3
+                && b1.getIcon() == ic23 && b2.getIcon() == ic28 && b3.getIcon() == ic25 && b4.getIcon() == ic21
+                && b5.getIcon() == ic22 && b6.getIcon() == ic29 && b7.getIcon() == ic24 && b8.getIcon() == ic27
+                && b9.getIcon() == ic26))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void nextLevel()
+    {
+            if(level == 3)
+            {
+                level = 1;
                 sample.setIcon(samicon1);
+
                 b1.setIcon(ic1);
                 b2.setIcon(ic2);
                 b3.setIcon(ic3);
@@ -233,11 +265,15 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b7.setIcon(ic7);
                 b8.setIcon(ic8);
                 b9.setIcon(ic9);
+
                 star=b9.getIcon();
                 starB.setIcon(ic0);
-            }//eof if
-            else if(s1==samicon1){
+            }
+            else if(level == 1)
+            {
+                level = 2;
                 sample.setIcon(samicon2);
+
                 b1.setIcon(ic11);
                 b2.setIcon(ic12);
                 b3.setIcon(ic13);
@@ -247,10 +283,14 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b7.setIcon(ic17);
                 b8.setIcon(ic18);
                 b9.setIcon(ic19);
+
                 star=b6.getIcon();
-            }//eof else
-            else{
+            }
+            else
+            {
                 sample.setIcon(samicon3);
+                level = 3;
+
                 b1.setIcon(ic21);
                 b2.setIcon(ic22);
                 b3.setIcon(ic23);
@@ -260,13 +300,14 @@ class PicPuzzle extends JFrame implements ActionListener{
                 b7.setIcon(ic27);
                 b8.setIcon(ic28);
                 b9.setIcon(ic29);
-                star=b6.getIcon();
-            }//eof else
 
-        }
-    }//end of actionPerformed
+                star=b6.getIcon();
+            }
+
+        openTextWindow();
+    }
 
     public static void main(String args[]){
         new PicPuzzle();
-    }//end of main
-}//end of class
+    }
+}
