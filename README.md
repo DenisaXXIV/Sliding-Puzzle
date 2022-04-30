@@ -21,4 +21,4 @@ Other timeless classics are sliding tile puzzles, mosaic picture puzzles, and sp
 
 
 
-<!---<sub>I learned to make this application following the tutorials on [javaTpoint](https://www.javatpoint.com)</sub>
+<sub>I learned to make this application following the tutorials on [javaTpoint](https://www.javatpoint.com)</sub>
